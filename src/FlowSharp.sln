@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowSharp", "FlowSharp\FlowSharp.csproj", "{0F997250-EDA6-47E5-9A6C-BF0A74E946EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowSharp.Tests", "FlowSharp.Tests\FlowSharp.Tests.csproj", "{5978722C-E696-4FC3-8C8C-51D1E7C0667E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F997250-EDA6-47E5-9A6C-BF0A74E946EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F997250-EDA6-47E5-9A6C-BF0A74E946EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F997250-EDA6-47E5-9A6C-BF0A74E946EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F997250-EDA6-47E5-9A6C-BF0A74E946EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5978722C-E696-4FC3-8C8C-51D1E7C0667E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5978722C-E696-4FC3-8C8C-51D1E7C0667E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5978722C-E696-4FC3-8C8C-51D1E7C0667E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5978722C-E696-4FC3-8C8C-51D1E7C0667E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
