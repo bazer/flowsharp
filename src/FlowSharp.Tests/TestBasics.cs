@@ -7,6 +7,42 @@ namespace FlowSharp.Tests
     public class TestBasics
     {
         [TestMethod]
+        public void ShouldStopOnFirstValue()
+        {
+            var email = "";
+
+            email.Flow()
+               .StopOnValue(() => DemoFunctions.ValidateEmpty(email), "Value is empty")
+               .StopOnValue(() => DemoFunctions.ValidateEmail(email), "String is not email")
+               .IfStopped(x => Assert.AreEqual("Value is empty", x))
+               .IfFlowing(x => Assert.Fail("Should be stopped"));
+        }
+
+        [TestMethod]
+        public void ShouldStopOnSecondValue()
+        {
+            var email = "not empty";
+
+            email.Flow()
+               .StopOnValue(() => DemoFunctions.ValidateEmpty(email), "Value is empty")
+               .StopOnValue(() => DemoFunctions.ValidateEmail(email), "String is not email")
+               .IfStopped(x => Assert.AreEqual("String is not email", x))
+               .IfFlowing(x => Assert.Fail("Should be stopped"));
+        }
+
+        [TestMethod]
+        public void ShouldNotStop()
+        {
+            var email = "test@test.com";
+
+            email.Flow()
+               .StopOnValue(() => DemoFunctions.ValidateEmpty(email), "Value is empty")
+               .StopOnValue(() => DemoFunctions.ValidateEmail(email), "String is not email")
+               .IfStopped(x => Assert.Fail("Should not be stopped"))
+               .IfFlowing(x => Assert.AreEqual("", x));
+        }
+
+        [TestMethod]
         public void Basics()
         {
             var name = "";
@@ -22,36 +58,49 @@ namespace FlowSharp.Tests
             //   .SwitchOnValue(string.Empty, () => DemoFunctions.ValidateEmpty(name))
             //   .SwitchOnValue(string.Empty, x => DemoFunctions.ValidateEmail(x));
 
-            FlowSharp.AsFlow(name)
-               .FailOnValue(x => DemoFunctions.ValidateEmpty(x), string.Empty)
-               .FailOnValue(x => DemoFunctions.ValidateEmail(x), string.Empty);
+            name.Flow()
+               .StopOnValue(x => DemoFunctions.ValidateEmpty(x), string.Empty)
+               .StopOnValue(x => DemoFunctions.ValidateEmail(x), string.Empty);
 
-            var result = name.AsFlow()
-               .FailOnValue(x => DemoFunctions.ValidateEmpty(x), string.Empty)
-               .FailOnValue(x => DemoFunctions.ValidateEmail(x), string.Empty)
-               .HandleFailure(x => Console.WriteLine(x))
+            var result = name.Flow()
+               .StopOnValue(x => DemoFunctions.ValidateEmpty(x), string.Empty)
+               .StopOnValue(x => DemoFunctions.ValidateEmail(x), string.Empty)
+               .IfStopped(x => Console.WriteLine(x))
                .Value;
 
-            var result2 = name.AsFlow()
-               .FailOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
-               .FailOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
-               .HandleFailure(x => Console.WriteLine(x))
+            var result2 = name.Flow()
+               .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
+               .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
+               .IfStopped(x => Console.WriteLine(x))
                .Value;
 
-            var result3 = name.AsFlow()
-               .FailOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
-               .FailOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
-               .FailOnValue(() => DemoFunctionsWithErrors.Process(name), false, fail => false)
-               .HandleFailure(x => Console.WriteLine(x))
+            var result3 = name.Flow()
+               .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
+               .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
+               .StopOnValue(() => DemoFunctionsWithErrors.Process(name), false, fail => false)
+               .IfStopped(x => Console.WriteLine(x))
                .Value;
 
 
-            var result4 = FlowSharp.AsFlow(ReturnValues.Ok)
+            //var result4 = FlowSharp.AsFlow(ReturnValues.Ok)
+            var result4 = SingleFlow<ReturnValues>.Flow(ReturnValues.Ok)
               .Flow(x => DemoFunctionsWithValueBag.ValidateEmpty(name))
               .Flow(x => DemoFunctionsWithValueBag.ValidateEmail(name))
               .Flow(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
               .Flow(x => DemoFunctionsWithValueBag.Process(x))
-              .HandleFailure(x => Console.WriteLine(x))
+              .IfStopped(x => Console.WriteLine(x))
+              .Value;
+
+
+            var result5 = ReturnValues.Ok.Flow()
+              .I(x => DemoFunctionsWithValueBag.ValidateEmpty(name))
+              .I(x => DemoFunctionsWithValueBag.ValidateEmail(name))
+              .I(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
+              .I(DemoFunctionsWithValueBag.Process)
+              .I(DemoFunctionsWithValueBag.Process)
+              .I(DemoFunctionsWithValueBag.Process)
+              .I(DemoFunctionsWithValueBag.Process)
+              .IfStopped(x => Console.WriteLine(x))
               .Value;
 
 

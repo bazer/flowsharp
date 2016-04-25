@@ -40,11 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FlowExtensions.cs" />
+    <Compile Include="Flow\FlowExtensions.cs" />
+    <Compile Include="Flow\StopOnValueExtensions.cs" />
+    <Compile Include="Flow\ControlExtensions.cs" />
     <Compile Include="FlowSharp.cs" />
-    <Compile Include="FlowValue.cs" />
+    <Compile Include="Flow\SingleFlow.cs" />
+    <Compile Include="IFlow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SideFlowExtensions.cs" />
+    <Compile Include="SideFlow\SideFlowExtensions.cs" />
+    <Compile Include="SideFlow\SideFlow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -64,26 +64,26 @@ namespace FlowSharp.Tests
     {
 
 
-        public static IFlowValue<ReturnValues> ValidateEmpty(string value)
+        public static ISingleFlow<ReturnValues> ValidateEmpty(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                return ReturnValues.ValueIsEmpty.AsFail();
+                return ReturnValues.ValueIsEmpty.Stop();
 
-            return ReturnValues.Ok.AsFlow();
+            return ReturnValues.Ok.Flow();
         }
 
-        public static IFlowValue<ReturnValues> ValidateEmail(string email)
+        public static ISingleFlow<ReturnValues> ValidateEmail(string email)
         {
             if (!email.Contains("@"))
-                return ReturnValues.StringIsNotEmail.AsFail();
+                return ReturnValues.StringIsNotEmail.Stop();
 
-            return ReturnValues.Ok.AsFlow();
+            return ReturnValues.Ok.Flow();
         }
 
 
-        public static IFlowValue<string> Process(string value)
+        public static ISingleFlow<string> Process(string value)
         {
-            return value.AsFlow();
+            return value.Flow();
 
             //return FlowSharp.Flow<string, ReturnValues>(value);
         }
