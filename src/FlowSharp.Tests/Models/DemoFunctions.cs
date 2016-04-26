@@ -62,30 +62,111 @@ namespace FlowSharp.Tests
 
     public class DemoFunctionsWithValueBag
     {
-
-
-        public static ISingleFlow<ReturnValues> ValidateEmpty(string value)
+        public static SingleFlow<ReturnValues> ValidateEmpty(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return ReturnValues.ValueIsEmpty.Stop();
 
-            return ReturnValues.Ok.Flow();
+            return ReturnValues.Ok;
         }
 
-        public static ISingleFlow<ReturnValues> ValidateEmail(string email)
+        public static SingleFlow<ReturnValues> ValidateEmail(string email)
         {
             if (!email.Contains("@"))
                 return ReturnValues.StringIsNotEmail.Stop();
 
-            return ReturnValues.Ok.Flow();
+            return ReturnValues.Ok;
         }
 
 
-        public static ISingleFlow<string> Process(string value)
+        public static SingleFlow<string> Process(string value)
         {
             return value.Flow();
 
             //return FlowSharp.Flow<string, ReturnValues>(value);
+        }
+    }
+
+    //public class DemoFunctionsWithReturnFlow
+    //{
+    //    public static ReturnFlow ValidateEmpty(string value)
+    //    {
+    //        if (string.IsNullOrWhiteSpace(value))
+    //            return ReturnValues.ValueIsEmpty.Stop();
+
+    //        return ReturnValues.Ok.Flow();
+    //    }
+
+    //    public static ReturnFlow ValidateEmail(string email)
+    //    {
+    //        if (!email.Contains("@"))
+    //            return ReturnValues.StringIsNotEmail.Stop();
+
+    //        return ReturnValues.Ok;
+    //    }
+
+
+    //    public static SingleFlow<string> Process(string value)
+    //    {
+    //        return value.Flow();
+
+    //        //return FlowSharp.Flow<string, ReturnValues>(value);
+    //    }
+    //}
+
+    //public class ReturnFlow : ISingleFlow<ReturnValues, ReturnFlow>
+    public class ReturnFlow : AbstractFlow<ReturnValues, ReturnFlow>
+    {
+        //public ReturnFlow(ReturnValues value) : base(value) { }
+
+        //public bool IsStopped
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+
+        //public ReturnValues Value
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+
+        //public ReturnFlow Flow(ReturnValues value)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public ReturnFlow Stop(ReturnValues value)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        public ReturnFlow(ReturnValues value, bool isStopped = false) : base(value, isStopped)
+        {
+        }
+
+        public override ReturnFlow Flow(ReturnValues value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ReturnFlow Stop(ReturnValues value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static implicit operator ReturnValues(ReturnFlow v)
+        {
+            return v.Value;
+        }
+
+        public static implicit operator ReturnFlow(ReturnValues v)
+        {
+            return new ReturnFlow(v);
+            //return SingleFlow<V>.Flow(v);
         }
     }
 }

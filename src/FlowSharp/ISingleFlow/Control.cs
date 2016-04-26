@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace FlowSharp
 {
-    public static class ControlExtensions
+    public static class ISingleFlowControl
     {
-        public static ISingleFlow<O> Flow<O>(this O value)
-        {
-            return SingleFlow<O>.Flow(value);
-        }
-
-        public static ISingleFlow<O> Stop<O>(this O value)
-        {
-            return SingleFlow<O>.Stop(value);
-        }
-
         public static ISingleFlow<O> IfStopped<O>(this ISingleFlow<O> flow, Action<O> func)
         {
             if (flow.IsStopped)
