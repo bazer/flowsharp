@@ -62,7 +62,7 @@ namespace FlowSharp.Tests
 
     public class DemoFunctionsWithValueBag
     {
-        public static SingleFlow<ReturnValues> ValidateEmpty(string value)
+        public static SideFlow<ReturnValues, string> ValidateEmpty(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return ReturnValues.ValueIsEmpty.Stop();
@@ -70,7 +70,7 @@ namespace FlowSharp.Tests
             return ReturnValues.Ok;
         }
 
-        public static SingleFlow<ReturnValues> ValidateEmail(string email)
+        public static SideFlow<ReturnValues, string> ValidateEmail(string email)
         {
             if (!email.Contains("@"))
                 return ReturnValues.StringIsNotEmail.Stop();

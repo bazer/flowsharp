@@ -10,7 +10,9 @@ namespace FlowSharp
     {
         V Value { get; }
         S SideValue { get; }
-        ISideFlow<T, S> Convert<T>();
+        ISideFlow<Y, S> Flow<Y>(Y value);
+        ISideFlow<Y, S> Stop<Y>(S value);
+        //ISideFlow<T, S> Convert<T>();
     }
 
     public class SideFlow<V, S> : ISideFlow<V, S>
@@ -19,34 +21,55 @@ namespace FlowSharp
         public S SideValue { get; }
         public bool IsStopped { get; }
 
-        protected SideFlow(V value)
+        public SideFlow(V value)
         {
             this.Value = value;
             this.IsStopped = false;
         }
 
-        protected SideFlow(S sideValue)
+        public SideFlow(S sideValue)
         {
             this.SideValue = sideValue;
             this.IsStopped = true;
         }
 
-        public static SideFlow<V, S> Flow(V value)
-        {
-            return new SideFlow<V, S>(value);
-        }
+        //public Y Flow<Y>(Y value)
+        //     where Y : ISideFlow<Y, S, Y>
+        //{
+        //    //return new SideFlow<Y, S>(value);
+        //}
 
-        public static SideFlow<V, S> Stop(S sideValue)
-        {
-            return new SideFlow<V, S>(sideValue);
-        }
+        //public SideFlow<V, S> Stop(S sideValue)
+        //{
+        //    return new SideFlow<V, S>(sideValue);
+        //}
 
         //public static SideFlow<V, S> Continue(S sideValue)
         //{
         //    return new SideFlow<V, S>(sideValue);
         //}
 
-        public ISideFlow<T, S> Convert<T>()
+        //public ISideFlow<T, S> Convert<T>()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Y Flow<Y>(Y value) where Y : ISideFlow<V, S, Y>
+        //{
+        //    return (Y)new SideFlow<Y, S>(value);
+        //}
+
+        //public Y Stop<Y>(S value) where Y : ISideFlow<V, S, Y>
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        ISideFlow<Y, S> ISideFlow<V, S>.Flow<Y>(Y value)
+        {
+            throw new NotImplementedException();
+        }
+
+        ISideFlow<Y, S> ISideFlow<V, S>.Stop<Y>(S value)
         {
             throw new NotImplementedException();
         }
