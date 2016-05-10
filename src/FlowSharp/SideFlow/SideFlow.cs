@@ -27,10 +27,10 @@ namespace FlowSharp
             this.IsStopped = false;
         }
 
-        public SideFlow(S sideValue)
+        public SideFlow(S sideValue, bool isStopped = true)
         {
             this.SideValue = sideValue;
-            this.IsStopped = true;
+            this.IsStopped = isStopped;
         }
 
         //public Y Flow<Y>(Y value)

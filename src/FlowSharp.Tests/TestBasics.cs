@@ -108,8 +108,8 @@ namespace FlowSharp.Tests
             var result4 = ReturnValues.Ok.SideFlow<ReturnValues, string>()
               .SideFlow(() => DemoFunctionsWithValueBag.ValidateEmpty(name))
               .SideFlow(() => DemoFunctionsWithValueBag.ValidateEmail(name))
-              .Flow(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
-              .Flow(x => DemoFunctionsWithValueBag.Process(x))
+              //.Flow(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
+              //.Flow(x => DemoFunctionsWithValueBag.Process(x))
               .IfStopped(x => Console.WriteLine(x));
 
             //var result4 = FlowSharp.AsFlow(ReturnValues.Ok)
