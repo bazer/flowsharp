@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlowSharp.Tests
@@ -68,49 +69,49 @@ namespace FlowSharp.Tests
                .IfStopped(x => Console.WriteLine(x))
                .Value;
 
-            var result2 = name.Flow()
-               //.StopOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
-               .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
-               .IfStopped(x => Console.WriteLine(x))
-               .Value;
+            //var result2 = name.Flow()
+            //   //.StopOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
+            //   .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
+            //   .IfStopped(x => Console.WriteLine(x))
+            //   .Value;
 
-            var result3 = name.Flow()
-               //.StopOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
-               .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
-               .StopOnValue(() => DemoFunctionsWithErrors.Process(name), false, fail => false)
-               .IfStopped(x => Console.WriteLine(x))
-               .Value;
+            //var result3 = name.Flow()
+            //   //.StopOnValue(() => DemoFunctionsWithErrors.ValidateEmpty(name), ReturnValues.ValueIsEmpty, fail => ReturnValues.UnknownError)
+            //   .StopOnValue(() => DemoFunctionsWithErrors.ValidateEmail(name), ReturnValues.StringIsNotEmail)
+            //   .StopOnValue(() => DemoFunctionsWithErrors.Process(name), false, fail => false)
+            //   .IfStopped(x => Console.WriteLine(x))
+            //   .Value;
 
 
-            
-            var result4 = ReturnValues.Ok
-              .Flow(x => DemoFunctionsWithValueBag.ValidateEmpty(name))
-              .Flow(x => DemoFunctionsWithValueBag.ValidateEmail(name))
-              .Flow(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
-              .Flow(x => DemoFunctionsWithValueBag.Process(x))
-              .IfStopped(x => Console.WriteLine(x));
+
+            //var result4 = ReturnValues.Ok
+            //  .Flow(x => DemoFunctionsWithExceptions.ValidateEmpty(name))
+            //  .Flow(x => DemoFunctionsWithExceptions.ValidateEmail(name))
+            //  .Flow(x => DemoFunctionsWithExceptions.Process(name), fail => fail.ToString())
+            //  .Flow(x => DemoFunctionsWithExceptions.Process(x))
+            //  .IfStopped(x => Console.WriteLine(x));
+
+
+
+            //var result5 = ReturnValues.Ok.Flow()
+            //  .I(x => DemoFunctionsWithExceptions.ValidateEmpty(name))
+            //  .I(x => DemoFunctionsWithExceptions.ValidateEmail(name))
+            //  //.I(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
+            //  .I(DemoFunctionsWithExceptions.Process)
+            //  .I(DemoFunctionsWithExceptions.Process)
+            //  .I(DemoFunctionsWithExceptions.Process)
+            //  .I(DemoFunctionsWithExceptions.Process)
+            //  .IfStopped(x => Console.WriteLine(x))
+            //  .Value;
+
+
+
+            var result4 = new ExceptionFlow<string>(email)
+              .SideFlow(DemoFunctionsWithExceptions.GetUser);
               
-
-
-            var result5 = ReturnValues.Ok.Flow()
-              .I(x => DemoFunctionsWithValueBag.ValidateEmpty(name))
-              .I(x => DemoFunctionsWithValueBag.ValidateEmail(name))
-              //.I(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
-              .I(DemoFunctionsWithValueBag.Process)
-              .I(DemoFunctionsWithValueBag.Process)
-              .I(DemoFunctionsWithValueBag.Process)
-              .I(DemoFunctionsWithValueBag.Process)
-              .IfStopped(x => Console.WriteLine(x))
-              .Value;
-
-
-
-            var result4 = ReturnValues.Ok.SideFlow<ReturnValues, string>()
-              .SideFlow(() => DemoFunctionsWithValueBag.ValidateEmpty(name))
-              .SideFlow(() => DemoFunctionsWithValueBag.ValidateEmail(name))
               //.Flow(x => DemoFunctionsWithValueBag.Process(name), fail => fail.ToString())
               //.Flow(x => DemoFunctionsWithValueBag.Process(x))
-              .IfStopped(x => Console.WriteLine(x));
+              //.IfStopped(x => Console.WriteLine(x));
 
             //var result4 = FlowSharp.AsFlow(ReturnValues.Ok)
             //  .Flow(() => DemoFunctionsWithValueBag.ValidateEmpty(name), fail => ReturnValues.UnknownError)

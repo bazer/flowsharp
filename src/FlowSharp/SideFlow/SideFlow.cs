@@ -9,7 +9,7 @@ namespace FlowSharp
     public interface ISideFlow<V, S> : IFlow
     {
         V Value { get; }
-        S SideValue { get; }
+        IEnumerable<S> SideValue { get; }
         ISideFlow<Y, S> Flow<Y>(Y value);
         ISideFlow<Y, S> Stop<Y>(S value);
         //ISideFlow<T, S> Convert<T>();
@@ -18,8 +18,9 @@ namespace FlowSharp
     public class SideFlow<V, S> : ISideFlow<V, S>
     {
         public V Value { get; }
-        public S SideValue { get; }
+        public IEnumerable<S> SideValue { get; }
         public bool IsStopped { get; }
+
 
         public SideFlow(V value)
         {
@@ -27,7 +28,7 @@ namespace FlowSharp
             this.IsStopped = false;
         }
 
-        public SideFlow(S sideValue, bool isStopped = true)
+        public SideFlow(ICollection<S> sideValue, bool isStopped = true)
         {
             this.SideValue = sideValue;
             this.IsStopped = isStopped;

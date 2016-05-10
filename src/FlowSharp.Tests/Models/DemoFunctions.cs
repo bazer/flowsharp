@@ -60,31 +60,41 @@ namespace FlowSharp.Tests
         }
     }
 
-    public class DemoFunctionsWithValueBag
+    public class User
     {
-        public static StringFlow<string> ValidateEmpty(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return "Value is Empty".Stop();
 
-            return value;
-        }
+    }
 
-        public static SideFlow<ReturnValues, string> ValidateEmail(string email)
+    public class DemoFunctionsWithExceptions
+    {
+        //public static StringFlow<string> ValidateEmpty(string value)
+        //{
+        //    if (string.IsNullOrWhiteSpace(value))
+        //        return "Value is Empty".Stop();
+
+        //    return value;
+        //}
+
+        public static User GetUser(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new Exception("Value is Empty");
+
             if (!email.Contains("@"))
-                return ReturnValues.StringIsNotEmail.Stop();
+                throw new Exception("String is not an email");
 
-            return ReturnValues.Ok;
+            return new User();
         }
 
 
-        public static SingleFlow<string> Process(string value)
-        {
-            return value.Flow();
 
-            //return FlowSharp.Flow<string, ReturnValues>(value);
-        }
+
+        //public static SingleFlow<string> Process(string value)
+        //{
+        //    return value.Flow();
+
+        //    //return FlowSharp.Flow<string, ReturnValues>(value);
+        //}
     }
 
     //public class DemoFunctionsWithReturnFlow
@@ -115,58 +125,58 @@ namespace FlowSharp.Tests
     //}
 
     //public class ReturnFlow : ISingleFlow<ReturnValues, ReturnFlow>
-    public class ReturnFlow : AbstractFlow<ReturnValues, ReturnFlow>
-    {
-        //public ReturnFlow(ReturnValues value) : base(value) { }
+    //public class ReturnFlow : AbstractFlow<ReturnValues, ReturnFlow>
+    //{
+    //    //public ReturnFlow(ReturnValues value) : base(value) { }
 
-        //public bool IsStopped
-        //{
-        //    get
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
+    //    //public bool IsStopped
+    //    //{
+    //    //    get
+    //    //    {
+    //    //        throw new NotImplementedException();
+    //    //    }
+    //    //}
 
-        //public ReturnValues Value
-        //{
-        //    get
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
+    //    //public ReturnValues Value
+    //    //{
+    //    //    get
+    //    //    {
+    //    //        throw new NotImplementedException();
+    //    //    }
+    //    //}
 
-        //public ReturnFlow Flow(ReturnValues value)
-        //{
-        //    throw new NotImplementedException();
-        //}
+    //    //public ReturnFlow Flow(ReturnValues value)
+    //    //{
+    //    //    throw new NotImplementedException();
+    //    //}
 
-        //public ReturnFlow Stop(ReturnValues value)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        public ReturnFlow(ReturnValues value, bool isStopped = false) : base(value, isStopped)
-        {
-        }
+    //    //public ReturnFlow Stop(ReturnValues value)
+    //    //{
+    //    //    throw new NotImplementedException();
+    //    //}
+    //    public ReturnFlow(ReturnValues value, bool isStopped = false) : base(value, isStopped)
+    //    {
+    //    }
 
-        public override ReturnFlow Flow(ReturnValues value)
-        {
-            throw new NotImplementedException();
-        }
+    //    public override ReturnFlow Flow(ReturnValues value)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public override ReturnFlow Stop(ReturnValues value)
-        {
-            throw new NotImplementedException();
-        }
+    //    public override ReturnFlow Stop(ReturnValues value)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public static implicit operator ReturnValues(ReturnFlow v)
-        {
-            return v.Value;
-        }
+    //    public static implicit operator ReturnValues(ReturnFlow v)
+    //    {
+    //        return v.Value;
+    //    }
 
-        public static implicit operator ReturnFlow(ReturnValues v)
-        {
-            return new ReturnFlow(v);
-            //return SingleFlow<V>.Flow(v);
-        }
-    }
+    //    public static implicit operator ReturnFlow(ReturnValues v)
+    //    {
+    //        return new ReturnFlow(v);
+    //        //return SingleFlow<V>.Flow(v);
+    //    }
+    //}
 }

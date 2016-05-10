@@ -46,6 +46,8 @@
     <Compile Include="ISingleFlow\ISingleFlow.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="SideFlow\Casting.cs" />
+    <Compile Include="SideFlow\Control.cs" />
+    <Compile Include="SideFlow\ExceptionFlow.cs" />
     <Compile Include="SingleFlow\Casting.cs" />
     <Compile Include="SingleFlow\Control.cs" />
     <Compile Include="SingleFlow\Flow.cs" />
